@@ -1,0 +1,16 @@
+{
+  "name": "firestore-export-import",
+  "version": "1.0.0",
+  "description": "A script that helps import and export data in Cloud Firestore",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "firestore",
+    "export",
+    "import"
+  ],
+  "author": "Dale Nguyen",
+  "license": "ISC"
+}
