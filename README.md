@@ -18,7 +18,7 @@ node export.js <your-collection-name>
 
 # Import database to Firestore
 
-This will import one collection to firebase and it will overwrite your current collection if there is a collection with that name in your Firestore
+This will import one collection to Firestore and it will overwrite your current collection if there is a collection with that name in your Firestore
 
 ```
 node import.js import-to-firestore.json
