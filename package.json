@@ -12,5 +12,8 @@
     "import"
   ],
   "author": "Dale Nguyen",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^5.8.0"
+  }
 }
