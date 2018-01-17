@@ -4,6 +4,7 @@ var serviceAccount = require("./serviceAccountKey.json");
 
 var collectionName = process.argv[2];
 
+// You should replae databaseURL with your own
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://ionic-firestore-dn.firebaseio.com"

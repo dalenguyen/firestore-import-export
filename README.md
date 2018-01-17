@@ -6,9 +6,11 @@ You need [NODE](https://nodejs.org/en/download/) or something that can run JAVAS
 
 Get **serviceAccount** JSON file from *Project Setting > SERVICE ACCOUNTS* in Firebase Console
 
+Change the *databaseURL* when initializeApp with your own
+
 # Export database from Firestore
 
-This will help you create a backup of your collection from Firestore to a JSON file name **firestore-export.json** 
+This will help you create a backup of your collection from Firestore to a JSON file name **firestore-export.json**
 
 ```
 node export.js <your-collection-name>
