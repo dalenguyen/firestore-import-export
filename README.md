@@ -8,6 +8,20 @@ Get **serviceAccount** JSON file from *Project Setting > SERVICE ACCOUNTS* in Fi
 
 Change the *databaseURL* when initializeApp with your own
 
+# Setting Up
+
+Download or clone this repository
+
+```
+git clone https://github.com/dalenguyen/firestore-import-export.git
+```
+
+Install NPM packages
+
+```
+npm install
+```
+
 # Export database from Firestore
 
 This will help you create a backup of your collection from Firestore to a JSON file name **firestore-export.json**
