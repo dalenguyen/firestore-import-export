@@ -12,9 +12,6 @@ admin.initializeApp({
 
 var db = admin.firestore();
 
-var collectionName = '';
-
-
 fs.readFile(fileName, 'utf8', function(err, data){
   if(err){
     return console.log(err);
@@ -23,20 +20,33 @@ fs.readFile(fileName, 'utf8', function(err, data){
   // Turn string from file to an Array
   dataArray = JSON.parse(data);
 
+  udpateCollection(dataArray).then(() => {
+    console.log('Successfully import collection!');
+  })
+
+})
+
+async function udpateCollection(dataArray){
   for(var index in dataArray){
-    collectionName = index;
+    var collectionName = index;
     for(var doc in dataArray[index]){
       if(dataArray[index].hasOwnProperty(doc)){
-        db.collection(collectionName).doc(doc)
-        .set(dataArray[index][doc])
-        .then(() => {
-          console.log('Document is successed adding to firestore!');
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        await startUpading(collectionName, doc, dataArray[index][doc])
       }
     }
   }
+}
 
-})
+function startUpading(collectionName, doc, data){
+  return new Promise(resolve => {
+    db.collection(collectionName).doc(doc)
+    .set(data)
+    .then(() => {
+      console.log(`${doc} is successed adding to firestore!`);
+      resolve('Data wrote!');
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  })
+}
