@@ -12,6 +12,7 @@ admin.initializeApp({
 });
 
 let db = admin.firestore();
+db.settings({ timestampsInSnapshots: true });
 
 let data = {};
 data[collectionName] = {};
