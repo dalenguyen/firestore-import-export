@@ -1,9 +1,14 @@
-var admin = require("firebase-admin");
-var fs = require('fs');
-var serviceAccount = require("./serviceAccountKey.json");
+const admin = require("firebase-admin");
+const fs = require('fs');
+const serviceAccount = require("./serviceAccountKey.json");
 
-var fileName = process.argv[2];
-var dateArray = process.argv[3].split(',');
+const fileName = process.argv[2];
+
+let dateArray;
+
+if(process.argv[3]) {
+  dateArray = process.argv[3].split(',');
+}
 
 // You should replae databaseURL with your own
 admin.initializeApp({
@@ -11,7 +16,7 @@ admin.initializeApp({
   databaseURL: "https://ionic-firestore-dn.firebaseio.com"
 });
 
-var db = admin.firestore();
+const db = admin.firestore();
 db.settings({ timestampsInSnapshots: true });
 
 fs.readFile(fileName, 'utf8', function(err, data){
@@ -22,16 +27,14 @@ fs.readFile(fileName, 'utf8', function(err, data){
   // Turn string from file to an Array
   dataArray = JSON.parse(data);
 
-  udpateCollection(dataArray).then(() => {
-    console.log('Successfully import collection!');
-  })
+  udpateCollection(dataArray);
 
 })
 
 async function udpateCollection(dataArray){
-  for(var index in dataArray){
-    var collectionName = index;
-    for(var doc in dataArray[index]){
+  for(const index in dataArray){
+    const collectionName = index;
+    for(const doc in dataArray[index]){
       if(dataArray[index].hasOwnProperty(doc)){
         await startUpading(collectionName, doc, dataArray[index][doc]);
       }
@@ -41,20 +44,33 @@ async function udpateCollection(dataArray){
 
 function startUpading(collectionName, doc, data){
   // convert date from unixtimestamp  
-  if(dateArray.length > 0) {    
+  let parameterValid = true;
+
+  if(typeof dateArray !== 'undefined') {        
     dateArray.map(date => {      
-      data[date] = new Date(data[date]._seconds * 1000);
+      if (data.hasOwnProperty(date)) {
+        data[date] = new Date(data[date]._seconds * 1000);
+      } else {
+        console.log('Please check your date parameters!!!', dateArray);
+        parameterValid = false;
+      }     
     });    
   }
-  return new Promise(resolve => {
-    db.collection(collectionName).doc(doc)
-    .set(data)
-    .then(() => {
-      console.log(`${doc} is successed adding to firestore!`);
-      resolve('Data wrote!');
-    })
-    .catch(error => {
-      console.log(error);
+  
+  if(parameterValid) {
+    return new Promise(resolve => {
+      db.collection(collectionName).doc(doc)
+      .set(data)
+      .then(() => {
+        console.log(`${doc} is successed adding to firestore!`);
+        resolve('Data wrote!');
+      })
+      .catch(error => {
+        console.log(error);
+      });
     });
-  });
+  } else {
+    console.log(`${doc} is not imported to firestore. Please check your parameters!`);    
+  }
+
 }
