@@ -3,6 +3,7 @@ var fs = require('fs');
 var serviceAccount = require("./serviceAccountKey.json");
 
 var fileName = process.argv[2];
+var dateArray = process.argv[3].split(',');
 
 // You should replae databaseURL with your own
 admin.initializeApp({
@@ -32,13 +33,19 @@ async function udpateCollection(dataArray){
     var collectionName = index;
     for(var doc in dataArray[index]){
       if(dataArray[index].hasOwnProperty(doc)){
-        await startUpading(collectionName, doc, dataArray[index][doc])
+        await startUpading(collectionName, doc, dataArray[index][doc]);
       }
     }
   }
 }
 
 function startUpading(collectionName, doc, data){
+  // convert date from unixtimestamp  
+  if(dateArray.length > 0) {    
+    dateArray.map(date => {      
+      data[date] = new Date(data[date]._seconds * 1000);
+    });    
+  }
   return new Promise(resolve => {
     db.collection(collectionName).doc(doc)
     .set(data)
@@ -49,5 +56,5 @@ function startUpading(collectionName, doc, data){
     .catch(error => {
       console.log(error);
     });
-  })
+  });
 }
