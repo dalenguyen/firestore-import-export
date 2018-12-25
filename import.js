@@ -62,7 +62,7 @@ function startUpading(collectionName, doc, data){
       db.collection(collectionName).doc(doc)
       .set(data)
       .then(() => {
-        console.log(`${doc} is successed adding to firestore!`);
+        console.log(`${doc} is imported successfully to firestore!`);
         resolve('Data wrote!');
       })
       .catch(error => {
