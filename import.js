@@ -36,13 +36,13 @@ async function udpateCollection(dataArray){
     const collectionName = index;
     for(const doc in dataArray[index]){
       if(dataArray[index].hasOwnProperty(doc)){
-        await startUpading(collectionName, doc, dataArray[index][doc]);
+        await startUpdating(collectionName, doc, dataArray[index][doc]);
       }
     }
   }
 }
 
-function startUpading(collectionName, doc, data){
+function startUpdating(collectionName, doc, data){
   // convert date from unixtimestamp  
   let parameterValid = true;
 
@@ -62,7 +62,7 @@ function startUpading(collectionName, doc, data){
       db.collection(collectionName).doc(doc)
       .set(data)
       .then(() => {
-        console.log(`${doc} is successed adding to firestore!`);
+        console.log(`${doc} is imported successfully to firestore!`);
         resolve('Data wrote!');
       })
       .catch(error => {
