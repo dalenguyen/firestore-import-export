@@ -76,4 +76,6 @@ Sample from __import-to-firestore.json__. "test" will be the collection name. Th
 }
 ```
 
+Thanks to [@fed239](https://github.com/fed239), you can use YAML files instead of JSON files in order to import to firestore.
+
 *If you have any recommendation or question, please create an issue. Thanks,*
