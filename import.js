@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const fs = require('fs');
+const YAML = require('js-yaml');
 const serviceAccount = require("./serviceAccountKey.json");
 
 const fileName = process.argv[2];
@@ -25,7 +26,11 @@ fs.readFile(fileName, 'utf8', function(err, data){
   }
 
   // Turn string from file to an Array
-  dataArray = JSON.parse(data);
+  if (fileName.endsWith('yaml') || fileName.endsWith('yml')) {
+    dataArray = YAML.safeLoad(data);
+  } else {
+    dataArray = JSON.parse(data);
+  }
 
   udpateCollection(dataArray);
 
