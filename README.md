@@ -35,10 +35,10 @@ node export.js <your-collection-name> <sub-collection-name-(optional)>
 
 # Import database to Firestore
 
-This will import one collection to Firestore and it will overwrite your current collection if there is a collection with that name in your Firestore. If you have date type in your JSON, please add the field to the command line. **The date arguments is optional**. 
+This will import one collection to Firestore and it will overwrite your current collection if there is a collection with that name in your Firestore. If you have date type in your JSON, please add the field to the command line. **The date and geo arguments is optional**. 
 
 ```
-node import.js import-to-firestore.json "date1,date2,date3"
+node import.js import-to-firestore.json date=date geo=Location
 ```
 
 If you have date type in your JSON, please add to your command line 
@@ -58,6 +58,10 @@ Sample from __import-to-firestore.json__. "test" will be the collection name. Th
       "date": {
         "_seconds":1534046400,
         "_nanoseconds":0
+      },
+      "Location": {
+        "_latitude": 49.290683,
+        "_longitude": -123.133956
       }
     },
     "second-key" : {
@@ -70,6 +74,10 @@ Sample from __import-to-firestore.json__. "test" will be the collection name. Th
       "date": {
         "_seconds":1534262435,
         "_nanoseconds":0
+      },
+      "Location": {
+        "_latitude": 49.290683,
+        "_longitude": -123.133956
       }
     }
   }

@@ -1,17 +1,25 @@
-const admin = require("firebase-admin");
 const fs = require('fs');
 const YAML = require('js-yaml');
+const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 
 const fileName = process.argv[2];
 
-let dateArray;
+const reDate = new RegExp(/^date/);
+const reGeo = new RegExp(/^geo/);
 
-if(process.argv[3]) {
-  dateArray = process.argv[3].split(',');
+let dateArray = process.argv.filter(item => item.match(reDate))[0];
+let geoArray = process.argv.filter(item => item.match(reGeo))[0];
+
+if (dateArray) {
+  dateArray = dateArray.split('=')[1].split(',');
 }
 
-// You should replae databaseURL with your own
+if (geoArray) {
+  geoArray = geoArray.split('=')[1].split(',');
+}
+
+// You should replace databaseURL with your own
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://ionic-firestore-dn.firebaseio.com"
@@ -51,6 +59,7 @@ function startUpdating(collectionName, doc, data){
   // convert date from unixtimestamp  
   let parameterValid = true;
 
+  // Enter date value
   if(typeof dateArray !== 'undefined') {        
     dateArray.map(date => {      
       if (data.hasOwnProperty(date)) {
@@ -60,6 +69,18 @@ function startUpdating(collectionName, doc, data){
         parameterValid = false;
       }     
     });    
+  }
+
+  // Enter geo value
+  if(typeof geoArray !== 'undefined') {
+    geoArray.map(geo => {
+      if(data.hasOwnProperty(geo)) {        
+        data[geo] = new admin.firestore.GeoPoint(data[geo]._latitude, data[geo]._longitude);        
+      } else {
+        console.log('Please check your geo parameters!!!', geoArray);
+        parameterValid = false;
+      }
+    })
   }
   
   if(parameterValid) {
@@ -77,5 +98,4 @@ function startUpdating(collectionName, doc, data){
   } else {
     console.log(`${doc} is not imported to firestore. Please check your parameters!`);    
   }
-
 }
