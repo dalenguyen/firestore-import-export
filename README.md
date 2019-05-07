@@ -35,7 +35,7 @@ node export.js <your-collection-name> <sub-collection-name-(optional)>
 
 # Import database to Firestore
 
-This will import one collection to Firestore and it will overwrite your current collection if there is a collection with that name in your Firestore. If you have date type in your JSON, please add the field to the command line. **The date and geo arguments is optional**. 
+This will import a collection to Firestore will overwrite any documents in that collection with matching id's to those in your json. If you have date type in your JSON, please add the field to the command line. **The date and geo arguments is optional**. 
 
 ```
 node import.js import-to-firestore.json date=date geo=Location
