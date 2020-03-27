@@ -40,11 +40,11 @@ fs.readFile(fileName, 'utf8', function(err, data){
     dataArray = JSON.parse(data);
   }
 
-  udpateCollection(dataArray);
+  updateCollection(dataArray);
 
 })
 
-async function udpateCollection(dataArray){
+async function updateCollection(dataArray){
   for(const index in dataArray){
     const collectionName = index;
     for(const doc in dataArray[index]){
