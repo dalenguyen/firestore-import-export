@@ -1,7 +1,7 @@
 # Firestore Import Export
 A script that help to export and import in Cloud Firestore
 
-**Update: you can try the NPM package for [backup and restore from Firestore](https://github.com/dalenguyen/firestore-backup-restore) now.
+** This repo is not maintained. Please try the [backup and restore from Firestore](https://github.com/dalenguyen/firestore-backup-restore) package instead!
 
 # Requirements
 
